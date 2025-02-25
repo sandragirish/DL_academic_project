@@ -1,0 +1,27 @@
+import pandas as pd
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, Conv1D, MaxPooling1D, Flatten, LSTM, GRU, Bidirectional
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import accuracy_score
+
+# 1. Multilayer Perceptron (MLP)
+#defining Multilayer Perceptron model
+mlp_model = Sequential([
+    Dense(128, activation='relu', input_shape=(X_train.shape[1],)),
+    Dropout(0.2),
+    Dense(64, activation='relu'),
+    Dropout(0.2),
+    Dense(1, activation='sigmoid')
+])
+#compiling
+mlp_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+#fitting
+mlp_model.fit(X_train, y_train, epochs=2, batch_size=128)
+
+
+mlp_predictions = mlp_model.predict(X_test)
+MLP_accuracy = mlp_model.evaluate(X_test, y_test)
+print('Test set\n  Loss: {:0.3f}\n  Accuracy: {:0.3f}'.format(MLP_accuracy[0],MLP_accuracy[1]))
