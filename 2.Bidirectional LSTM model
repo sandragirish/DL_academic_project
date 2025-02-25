@@ -1,0 +1,14 @@
+# 2.Bidirectional LSTM model
+#defining Bidirectional LSTM model
+bidirectional_lstm_model = Sequential([
+    Bidirectional(LSTM(128), input_shape=(X_train.shape[1], 1)),
+    Dense(1, activation='sigmoid')
+])
+
+bidirectional_lstm_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+bidirectional_lstm_model.fit(X_train, y_train, epochs=3, batch_size=98)
+bidirectional_lstm_probabilities = bidirectional_lstm_model.predict(X_test)
+bidirectional_lstm_predictions = (bidirectional_lstm_probabilities > 0.5).astype(int)
+bidirectional_lstm_accuracy = accuracy_score(y_test, bidirectional_lstm_predictions)
+bidirectional_accuracy = bidirectional_lstm_model.evaluate(X_test, y_test)
+print('Test set\n  Loss: {:0.3f}\n  Accuracy: {:0.3f}'.format(bidirectional_accuracy[0],bidirectional_accuracy[1]))
