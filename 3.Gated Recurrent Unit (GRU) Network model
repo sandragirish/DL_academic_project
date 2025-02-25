@@ -1,0 +1,14 @@
+# 3.Gated Recurrent Unit (GRU) Network model
+#defining GRU model
+gru_model = Sequential([
+    GRU(128, input_shape=(X_train.shape[1], 1)),
+    Dense(1, activation='sigmoid')
+])
+
+gru_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+gru_model.fit(X_train, y_train, epochs=3, batch_size=32)
+gru_probabilities = gru_model.predict(X_test)
+gru_predictions = (gru_probabilities > 0.5).astype(int)
+gru_accuracy1 = accuracy_score(y_test, gru_predictions)
+gru_accuracy = gru_model.evaluate(X_test, y_test)
+print('Test set\n  Loss: {:0.3f}\n  Accuracy: {:0.3f}'.format(gru_accuracy[0],gru_accuracy[1]))
