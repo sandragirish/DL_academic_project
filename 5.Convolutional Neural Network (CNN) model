@@ -1,0 +1,24 @@
+# 5.Convolutional Neural Network (CNN) model
+from tensorflow.keras.layers import Dense, Dropout, Conv1D, MaxPooling1D, Flatten
+#defining CNN model
+cnn_model = Sequential([
+    Conv1D(64, 3, activation='relu', input_shape=(X_train.shape[1], 1)),
+    MaxPooling1D(2),
+    Flatten(),
+    Dense(128, activation='relu'),
+    Dense(1, activation='sigmoid')
+])
+# Create the model
+model = Sequential()
+model.add(Dense(64, activation='relu', input_dim=X_train.shape[1]))
+model.add(Dropout(0.5))
+model.add(Dense(32, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(1, activation='sigmoid'))
+
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+model.fit(X_train, y_train, epochs=3, batch_size=128, validation_data=(X_test, y_test))
+
+cnn_accuracy = model.evaluate(X_test, y_test)
+print('Test set\n  Loss: {:0.3f}\n  Accuracy: {:0.3f}'.format(cnn_accuracy[0],cnn_accuracy[1]))
